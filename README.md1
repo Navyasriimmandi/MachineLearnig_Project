@@ -1,0 +1,64 @@
+Name: Immandi Navya Sree
+Project Title: Report on Take some data. Apply EDA and generate insights from it (Explorin the Quality of the wine).
+Date: 16/02/2025
+
+
+**Project Overview:** 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warning as wr
+
+wr.filterwarnings('ignore')
+
+**Load Dataset:**
+df = pd.read_csv("WineQT.csv")
+
+**Dataset Overview:**
+df.shape df.info() df.describe() df.columns.tolist() df.isnull().sum()
+
+**Checking duplicate values:**
+df.nunique()
+
+**Count the occurrences of each quality value:**
+quality_counts = df['quality'].value_counts()
+
+**Create a bar plot:**
+plt.figure(figsize=(8, 6)) plt.bar(quality_counts.index, quality_counts, color='deeppink') plt.title('Count Plot of Quality') plt.xlabel('Quality') plt.ylabel('Count') plt.show()
+
+**Distribution plots for numerical columns:**
+sns.set_style("darkgrid") numerical_columns = df.select_dtypes(include=["int64", "float64"]).columns
+plt.figure(figsize=(14, len(numerical_columns) * 3)) for idx, feature in enumerate(numerical_columns, 1): plt.subplot(len(numerical_columns), 2, idx) sns.histplot(df[feature], kde=True) plt.title(f"{feature} | Skewness: {round(df[feature].skew(), 2)}")
+plt.tight_layout() plt.show()
+
+**Swarm plot for quality and alcohol:**
+plt.figure(figsize=(10, 8)) sns.swarmplot(x="quality", y="alcohol", data=df, palette='viridis') plt.title('Swarm Plot for Quality and Alcohol') plt.xlabel('Quality') plt.ylabel('Alcohol') plt.show()
+
+**Pair plot:**
+sns.set_palette("Pastel1") sns.pairplot(df) plt.suptitle('Pair Plot for DataFrame') plt.show()
+
+**Violin plot for alcohol across quality levels:**
+df['quality'] = df['quality'].astype(str) plt.figure(figsize=(10, 8)) sns.violinplot( x="quality", y="alcohol", data=df, palette={ '3': 'lightcoral', '4': 'lightblue', '5': 'lightgreen', '6': 'gold', '7': 'lightskyblue', '8': 'plum' } ) plt.title('Violin Plot for Quality and Alcohol') plt.xlabel('Quality') plt.ylabel('Alcohol') plt.show()
+
+
+
+**Tips for a Polished GitHub Project:**
+
+-  Use **Jupyter Notebook** for better readability and inline plots.
+-  Add **comments** and **section headers** in your code.
+-  Include a **requirements.txt**:
+  
+  pandas
+  numpy
+  matplotlib
+  seaborn
+
+
+**Summary:**
+This analysis reveals that alcohol content has a strong positive correlation with wine quality. The visualizations help understand feature distributions and relationships, which are crucial for building predictive models later.
+
+**Conclusion:**
+This exploratory analysis of the WineQT dataset reveals meaningful patterns between wine quality and its chemical properties. Among all features, alcohol content shows the strongest positive correlation with quality, suggesting it plays a key role in consumer ratings. Visualizations like violin plots, swarm plots, and heatmaps helped uncover trends, distributions, and relationships that are essential for building predictive models in future stages.
+This project lays a solid foundation for further work in machine learning, such as classification or regression models to predict wine quality. It also demonstrates the power of data visualization in extracting insights and communicating findings effectively.
+
